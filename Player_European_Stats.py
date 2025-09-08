@@ -1,34 +1,36 @@
 #%% Imports.
-import os
 import urllib
+import streamlit as st
 import sqlalchemy as alc
 import pandas as pd
-import streamlit as st
 import altair as alt
 
 #%% Connect to SQL server using SQL alchemy.
 
 def connect_to_sql_alchemy_server():
     """
-    :param server_type: Takes values dev (development, localhost) or prod (production server).
     :param   server:    Name of SQL server you want to connect to.
     :param   database:  Name of database you want to connect to.
     :param   username:  Azure account username.
     :return: engine:    SQL alchemy engine connected to desired SQL server.
     """
     # Input server, database, and username.
-    server = os.getenv("SQL_SERVER")
-    database = os.getenv("SQL_DATABASE")
-    username = os.getenv("SQL_USERNAME")
+    server = st.secrets["SQL_SERVER"]
+    database = st.secrets["SQL_DATABASE"]
+    username = st.secrets["SQL_USERNAME"]
+    password = st.secrets["SQL_PASSWORD"]
 
     # Connection to server/database.
-    params = urllib.parse.quote_plus('DRIVER={ODBC Driver 18 for SQL Server}' \
-                                     ';SERVER=tcp:' + server + \
-                                     ';PORT=1433' + \
-                                     ';DATABASE=' + database + \
-                                     ';UID=' + username + \
-                                     ';Authentication=ActiveDirectoryInteractive;')
-    conn_string = "mssql+pyodbc:///?odbc_connect={}".format(params)
+    # params = urllib.parse.quote_plus('DRIVER={ODBC Driver 18 for SQL Server}' \
+    #                                  ';SERVER=tcp:' + server + \
+    #                                  ';PORT=1433' + \
+    #                                  ';DATABASE=' + database + \
+    #                                  ';UID=' + username + \
+    #                                  ';Authentication=ActiveDirectoryInteractive;')
+    conn_string = (
+        f"mssql+pyodbc://{username}:{password}@{server}/{database}"
+        "?driver=ODBC+Driver+18+for+SQL+Server"
+    )
 
     # Foreign SQL server can't handle all rows being inserted at once, so fast_executemany is set to False.
     engine = alc.create_engine(conn_string, echo=False, fast_executemany=False)
