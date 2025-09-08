@@ -45,7 +45,7 @@ def load_competitions():
     :return: List containing all unique competition names.
     """
     # Connect to SQL server.
-    sql_engine = connect_to_sql_alchemy_server(server_type="prod")
+    sql_engine = connect_to_sql_alchemy_server()
 
     # Select all distinct competitions names.
     query = """
@@ -72,7 +72,7 @@ def load_number_of_seasons(selected_comps):
         return []
 
     # Connect to SQL server.
-    sql_engine = connect_to_sql_alchemy_server(server_type="prod")
+    sql_engine = connect_to_sql_alchemy_server()
 
     # Create a string of ?s, followed by a comma, the ?s will be replaced by the selected competitions. SQL Server uses ? placeholders.
     placeholders = ",".join(["?"] * len(selected_comps))
@@ -107,7 +107,7 @@ def load_players(minimum_seasons, selected_comps):
         return []
 
     # Connect to SQL server.
-    sql_engine = connect_to_sql_alchemy_server(server_type="prod")
+    sql_engine = connect_to_sql_alchemy_server()
 
     # Create a string of ?s, followed by a comma, the ?s will be replaced by the selected competitions. SQL Server uses ? placeholders.
     placeholders = ",".join(["?"] * len(selected_comps))
@@ -144,7 +144,7 @@ def load_player_data(minimum_seasons, player, selected_comps):
         return pd.DataFrame()
 
     # Connect to SQL server.
-    sql_engine = connect_to_sql_alchemy_server(server_type="prod")
+    sql_engine = connect_to_sql_alchemy_server()
 
     # Create a string of ?s, followed by a comma, the ?s will be replaced by the selected competitions. SQL Server uses ? placeholders.
     placeholders = ",".join(["?"] * len(selected_comps))
