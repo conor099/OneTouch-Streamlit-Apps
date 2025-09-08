@@ -1,3 +1,4 @@
+pymssql
 streamlit
 pyodbc
 sqlalchemy
