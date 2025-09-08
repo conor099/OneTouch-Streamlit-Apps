@@ -1,5 +1,4 @@
 #%% Imports.
-import urllib
 import streamlit as st
 import sqlalchemy as alc
 import pandas as pd
