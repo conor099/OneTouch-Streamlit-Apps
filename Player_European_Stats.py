@@ -1,4 +1,5 @@
 #%% Imports.
+import urllib
 import streamlit as st
 import sqlalchemy as alc
 import pandas as pd
@@ -20,13 +21,7 @@ def connect_to_sql_alchemy_server():
     password = st.secrets["SQL_PASSWORD"]
 
     # Connection to server/database.
-    # params = urllib.parse.quote_plus('DRIVER={ODBC Driver 18 for SQL Server}' \
-    #                                  ';SERVER=tcp:' + server + \
-    #                                  ';PORT=1433' + \
-    #                                  ';DATABASE=' + database + \
-    #                                  ';UID=' + username + \
-    #                                  ';Authentication=ActiveDirectoryInteractive;')
-    conn_string = (
+    params = urllib.parse.quote_plus(
         "Driver={ODBC Driver 18 for SQL Server};"
         f"Server={server};"
         f"Database={database};"
@@ -34,8 +29,8 @@ def connect_to_sql_alchemy_server():
         f"Pwd={password};"
         "Encrypt=yes;"
         "TrustServerCertificate=no;"
-        "Connection Timeout=30;"
-    )
+        "Connection Timeout=30;")
+    conn_string = "mssql+pyodbc:///?odbc_connect=" + params
 
     # Foreign SQL server can't handle all rows being inserted at once, so fast_executemany is set to False.
     engine = alc.create_engine(conn_string, echo=False, fast_executemany=False)
