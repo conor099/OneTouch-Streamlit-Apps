@@ -34,7 +34,7 @@ def connect_to_sql_alchemy_server():
     conn_string = f"mssql+pymssql://{username}:{password}@{server}/{database}"
 
     # Foreign SQL server can't handle all rows being inserted at once, so fast_executemany is set to False.
-    engine = alc.create_engine(conn_string, echo=False, fast_executemany=False)
+    engine = alc.create_engine(conn_string, echo=False)
 
     return engine
 
