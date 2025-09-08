@@ -27,8 +27,14 @@ def connect_to_sql_alchemy_server():
     #                                  ';UID=' + username + \
     #                                  ';Authentication=ActiveDirectoryInteractive;')
     conn_string = (
-        f"mssql+pyodbc://{username}:{password}@{server}/{database}"
-        "?driver=ODBC+Driver+18+for+SQL+Server"
+        "Driver={ODBC Driver 18 for SQL Server};"
+        f"Server={server};"
+        f"Database={database};"
+        f"Uid={username};"
+        f"Pwd={password};"
+        "Encrypt=yes;"
+        "TrustServerCertificate=no;"
+        "Connection Timeout=30;"
     )
 
     # Foreign SQL server can't handle all rows being inserted at once, so fast_executemany is set to False.
