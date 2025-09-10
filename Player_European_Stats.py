@@ -21,15 +21,17 @@ def connect_to_sql_alchemy_server():
     password = st.secrets["SQL_PASSWORD"]
 
     # Connection to server/database.
-    params = (
-        "Driver={ODBC Driver 18 for SQL Server};"
-        f"Server={server};"
-        f"Database={database};"
-        f"Uid={username};"
-        f"Pwd={password};")
+    params = ("DRIVER={ODBC Driver 18 for SQL Server};SERVER="
+             + server
+             + ";DATABASE="
+             + database
+             + ";UID="
+             + username
+             + ";PWD="
+             + password)
         # "Encrypt=yes;"
         # "TrustServerCertificate=no;"
-        # "Connection Timeout=30;")
+        # "Connection Timeout=30;"
     conn_string = params
     # conn_string = f"mssql+pymssql://{username}:{password}@{server}/{database}"
 
