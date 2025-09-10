@@ -1,6 +1,6 @@
+pyodbc
 pymssql
 streamlit
-pyodbc
 sqlalchemy
 pandas
 altair
