@@ -21,7 +21,7 @@ def connect_to_sql_alchemy_server():
     password = st.secrets["SQL_PASSWORD"]
 
     # Connection to server/database.
-    params = urllib.parse.quote_plus(
+    params = (
         "Driver={ODBC Driver 18 for SQL Server};"
         f"Server={server};"
         f"Database={database};"
