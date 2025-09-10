@@ -20,20 +20,21 @@ def connect_to_sql_alchemy_server():
     username = st.secrets["SQL_USERNAME"]
     password = st.secrets["SQL_PASSWORD"]
 
-    # Connection to server/database.
-    params = ("DRIVER={ODBC Driver 17 for SQL Server};SERVER="
-             + server
-             + ";DATABASE="
-             + database
-             + ";UID="
-             + username
-             + ";PWD="
-             + password)
-        # "Encrypt=yes;"
-        # "TrustServerCertificate=no;"
-        # "Connection Timeout=30;"
-    conn_string = params
-    # conn_string = f"mssql+pymssql://{username}:{password}@{server}/{database}"
+    # # Build raw ODBC string
+    # odbc_str = (
+    #     f"DRIVER={{ODBC Driver 17 for SQL Server}};"
+    #     f"SERVER={server};"
+    #     f"DATABASE={database};"
+    #     f"UID={username};"
+    #     f"PWD={password};"
+    # )
+    #
+    # # Encode ODBC string
+    # params = urllib.parse.quote_plus(odbc_str)
+    #
+    # # SQLAlchemy connection string
+    # conn_string = f"mssql+pyodbc:///?odbc_connect={params}"
+    conn_string = f"mssql+pymssql://{username}:{password}@{server}/{database}"
 
     # Foreign SQL server can't handle all rows being inserted at once, so fast_executemany is set to False.
     engine = alc.create_engine(conn_string, echo=False)
