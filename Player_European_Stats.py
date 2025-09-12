@@ -37,7 +37,7 @@ def connect_to_sql_alchemy_server():
 conn = st.connection("sql",
     query={
         "driver": "ODBC Driver 17 for SQL Server"
-    }) # Google st.connection
+    })
 df = conn.query("SELECT * FROM dim.Fbref_Competitions_cur")
 st.dataframe(df)
 
