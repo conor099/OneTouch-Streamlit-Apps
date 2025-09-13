@@ -187,9 +187,10 @@ def create_streamlit_app():
     # Wrap all filters in a box.
     with st.container(border=True):
         # Step 1: Select competitions.
-        competitions = st.selectbox(
+        competitions = st.multiselect(
             "Select a competition/competitions:",
-            options=sorted(load_competitions())
+            options=sorted(load_competitions()),
+            default="Champions League"
         )
 
         # Raise error if no competition selected.
