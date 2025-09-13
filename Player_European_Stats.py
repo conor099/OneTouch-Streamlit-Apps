@@ -15,16 +15,19 @@ def connect_to_sql_alchemy_server():
     :return: engine:    SQL alchemy engine connected to desired SQL server.
     """
     # Input server, database, and username.
-    server = st.secrets["SQL_SERVER"]
-    database = st.secrets["SQL_DATABASE"]
-    username = st.secrets["SQL_USERNAME"]
-    password = st.secrets["SQL_PASSWORD"]
+    server = st.secrets["server"]
+    database = st.secrets["database"]
+    username = st.secrets["username"]
+    password = st.secrets["password"]
 
-    # Extract full username using for connection string.
-    server_name = server.split(".")[0]
-    full_username = f"{username}@{server_name}"
-
-    conn_string = f"mssql+pymssql://{full_username}:{password}@{server}/{database}"
+    # Connection to server/database.
+    params = urllib.parse.quote_plus('DRIVER={ODBC Driver 18 for SQL Server}' \
+                                     ';SERVER=tcp:' + server + \
+                                     ';PORT=1433' + \
+                                     ';DATABASE=' + database + \
+                                     ';UID=' + username + \
+                                     ';Authentication=ActiveDirectoryInteractive;')
+    conn_string = "mssql+pyodbc:///?odbc_connect={}".format(params)
 
     # Foreign SQL server can't handle all rows being inserted at once, so fast_executemany is set to False.
     engine = alc.create_engine(conn_string, echo=False, pool_pre_ping=True)
@@ -32,14 +35,13 @@ def connect_to_sql_alchemy_server():
 
     return engine
 
-#%% Test connection
+#%% Test connection.
 
-conn = st.connection("sql",
-    query={
-        "driver": "ODBC Driver 17 for SQL Server"
-    })
-df = conn.query("SELECT * FROM dim.Fbref_Competitions_cur")
-st.dataframe(df)
+engine = connect_to_sql_alchemy_server()
+query = """SELECT * FROM dim.Fbref_Competitions"""
+
+fbref_comps = pd.read_sql_query(query, engine)
+st.dataframe(fbref_comps)
 
 # #%% Function to load all unique competition names.
 #
