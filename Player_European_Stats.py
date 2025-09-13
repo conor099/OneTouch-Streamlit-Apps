@@ -248,7 +248,6 @@ def create_streamlit_app():
     total_reds = final_df["red_cards"].sum(skipna=True)
     minutes_played = final_df["minutes_played"].sum(skipna=True)
     number_of_seasons = final_df["number_of_seasons"].mode().iat[0]
-    print(number_of_seasons)
 
     # If main position/shirt number for a player is unavailable, use Unknown.
     main_position = (final_df.loc[final_df["player_position"] != "N/A", "player_position"].mode())
@@ -276,8 +275,7 @@ def create_streamlit_app():
     #         """,
     #     unsafe_allow_html=True
     # )
-    col0 = st.columns(1)
-    col0.metric("Number of seasons", number_of_seasons)
+    st.metric("Number of seasons", number_of_seasons)
 
     # Appearances, goals and assists.
     col1, col2, col3 = st.columns(3)
