@@ -34,14 +34,6 @@ def connect_to_sql_alchemy_server():
 
     return engine
 
-# #%% Test connection.
-#
-# engine = connect_to_sql_alchemy_server()
-# query = """SELECT * FROM dim.Fbref_Competitions"""
-#
-# fbref_comps = pd.read_sql_query(query, engine)
-# st.dataframe(fbref_comps)
-
 #%% Function to load all unique competition names.
 
 @st.cache_data(ttl=600)
@@ -189,16 +181,15 @@ def create_streamlit_app():
     )
 
     # Set title.
-    st.markdown("<h1 style='text-align: center; color: #FF800E;'>⚽ European Competitions: Player analysis ⚽</h1>",
+    st.markdown("<h1 style='text-align: center; color: #FF800E;'>⚽ European Competitions: Player overview ⚽</h1>",
                 unsafe_allow_html=True)
 
     # Wrap all filters in a box.
     with st.container(border=True):
         # Step 1: Select competitions.
-        competitions = st.multiselect(
+        competitions = st.selectbox(
             "Select a competition/competitions:",
-            options=sorted(load_competitions()),
-            default=["Champions League"]
+            options=sorted(load_competitions())
         )
 
         # Raise error if no competition selected.
@@ -255,6 +246,7 @@ def create_streamlit_app():
     total_yellows = final_df["yellow_cards"].sum(skipna=True)
     total_reds = final_df["red_cards"].sum(skipna=True)
     minutes_played = final_df["minutes_played"].sum(skipna=True)
+    number_of_seasons = final_df["number_of_seasons"].mode().iat[0]
 
     # If main position/shirt number for a player is unavailable, use Unknown.
     main_position = (final_df.loc[final_df["player_position"] != "N/A", "player_position"].mode())
@@ -271,6 +263,17 @@ def create_streamlit_app():
     # Player overview statistics.
     st.markdown(f"<h2 style='color:#FF800E;'>Player overview for {player.split(' (')[0]}:</h2>", unsafe_allow_html=True)
     st.markdown("<hr style='border: none; height: 2px; background-color: #FF800E;'>", unsafe_allow_html=True)
+
+    # Seasons played in selected competition for player.
+    st.markdown(
+        f"""
+            <div style='text-align: left; padding:10px; border-radius:10px;'>
+                <p style='font-size:14px; color:white;'>Number of seasons</p>
+                <p style='font-size:18px;; margin:0;'>{number_of_seasons}</p>
+            </div>
+            """,
+        unsafe_allow_html=True
+    )
 
     # Appearances, goals and assists.
     col1, col2, col3 = st.columns(3)
