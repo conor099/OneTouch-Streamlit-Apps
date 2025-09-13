@@ -21,7 +21,7 @@ def connect_to_sql_alchemy_server():
     password = st.secrets["password"]
 
     # Connection to server/database.
-    params = urllib.parse.quote_plus('DRIVER={ODBC Driver 18 for SQL Server}' \
+    params = urllib.parse.quote_plus('DRIVER={ODBC Driver 17 for SQL Server}' \
                                      ';SERVER=tcp:' + server + \
                                      ';PORT=1433' + \
                                      ';DATABASE=' + database + \
