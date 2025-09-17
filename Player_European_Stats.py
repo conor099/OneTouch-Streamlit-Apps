@@ -266,15 +266,6 @@ def create_streamlit_app():
     st.markdown("<hr style='border: none; height: 2px; background-color: #FF800E;'>", unsafe_allow_html=True)
 
     # Seasons played in selected competition for player.
-    # st.markdown(
-    #     f"""
-    #         <div style='text-align: left; padding:10px; border-radius:10px;'>
-    #             <p style='font-size:14px; color:white;'>Number of seasons</p>
-    #             <p style='font-size:18px;; margin:0;'>{number_of_seasons}</p>
-    #         </div>
-    #         """,
-    #     unsafe_allow_html=True
-    # )
     st.metric("Number of seasons", number_of_seasons)
 
     # Appearances, goals and assists.
