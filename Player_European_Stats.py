@@ -52,7 +52,7 @@ def load_latest_game_date():
     """
 
     # Convert query to date.
-    latest_game_date = pd.to_datetime(pd.read_sql(query, sql_engine)["latest_game_date"])
+    latest_game_date = pd.read_sql(query, sql_engine)["latest_game_date"]
 
     return latest_game_date
 
