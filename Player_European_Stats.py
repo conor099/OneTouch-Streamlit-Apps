@@ -203,28 +203,28 @@ def create_streamlit_app():
     )
 
     # Add latest game date in dataframe as a header.
-    st.markdown("""
+    latest_game_date = f"Latest game date: {load_latest_game_date()}"
+    st.markdown(f"""
         <style>
-        .fixed-header {
+        .fixed-header {{
             position: fixed;
             top: 0;
             left: 0;
             width: 100%;
-            background-color: #0E1117;  /* Dark background */
-            color: white;
+            color: #FF800E;
             padding: 1rem;
             text-align: center;
             font-size: 1.5rem;
             font-weight: bold;
             z-index: 9999;
             box-shadow: 0 2px 6px rgba(0,0,0,0.3);
-        }
-        .block-container {
+        }}
+        .block-container {{
             padding-top: 80px; /* Push content below header */
-        }
+        }}
         </style>
         <div class="fixed-header">
-            🚀 My Streamlit App Header
+            {latest_game_date}
         </div>
     """, unsafe_allow_html=True)
 
