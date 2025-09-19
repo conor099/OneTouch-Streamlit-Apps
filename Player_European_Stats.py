@@ -197,8 +197,8 @@ def create_streamlit_app():
         menu_items={
             'Report a bug': "mailto:contact@onetouchinsights.com",
             'About': "All data comes from Fbref European matches from 1990-2025. 2 seasons of European Cup (1990-1992), "
-                     "34 seasons of Champions League (1992-2025), 20 seasons of UEFA Cup (1990-2009), 16 seasons of "
-                     "Europa League (2010-2025), and 4 seasons of Europa Conference League (2021-2025)."
+                     "35 seasons of Champions League (1992-Present), 20 seasons of UEFA Cup (1990-2009), 16 seasons of "
+                     "Europa League (2010-Present), and 4 seasons of Europa Conference League (2021-Present)."
         }
     )
 
