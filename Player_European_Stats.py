@@ -34,6 +34,28 @@ def connect_to_sql_alchemy_server():
 
     return engine
 
+#%% Function to load latest game date.
+
+@st.cache_data(ttl=600)
+def load_latest_game_date():
+    """
+    :return: Date of the latest game included in the dataframe.
+    """
+    # Connect to SQL server.
+    sql_engine = connect_to_sql_alchemy_server()
+
+    # Select latest game date.
+    query = """
+                SELECT
+                    MAX(game_date) AS latest_game_date
+                FROM streamlit.Fbref_Appearances
+    """
+
+    # Convert query to date.
+    latest_game_date = pd.to_datetime(pd.read_sql(query, sql_engine)["latest_game_date"])
+
+    return latest_game_date
+
 #%% Function to load all unique competition names.
 
 @st.cache_data(ttl=600)
@@ -179,6 +201,9 @@ def create_streamlit_app():
                      "Europa League (2010-2025), and 4 seasons of Europa Conference League (2021-2025)."
         }
     )
+
+    # Add latest game date in dataframe as a header.
+    st.header(f"Latest game date: {load_latest_game_date()}")
 
     # Set title.
     st.markdown("<h1 style='text-align: center; color: #FF800E;'>⚽ European Competitions: Player overview ⚽</h1>",
