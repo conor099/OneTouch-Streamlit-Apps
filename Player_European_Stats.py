@@ -203,7 +203,8 @@ def create_streamlit_app():
     )
 
     # Add latest game date in dataframe as a header.
-    latest_game_date = f"Latest game date: {load_latest_game_date()}"
+    latest_game_date = f"Latest game date: {load_latest_game_date().strftime('%B %d, %Y')}"
+    st.header(latest_game_date)
     st.markdown(f"""
         <style>
         .fixed-header {{
