@@ -202,33 +202,23 @@ def create_streamlit_app():
         }
     )
 
-    # Add latest game date in dataframe as a header.
-    latest_game_date = f"Latest game date: {load_latest_game_date().strftime('%B %d, %Y')}"
-    st.header(latest_game_date)
-    st.markdown(f"""
+    # Inject CSS to style headers
+    st.markdown(
+        """
         <style>
-        .fixed-header {{
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            background-color: #0E1117;  /* dark grey so it stands out in dark mode */
-            color: #FF800E;
-            padding: 1rem;
-            text-align: center;
-            font-size: 1.5rem;
-            font-weight: bold;
-            z-index: 9999;
-            box-shadow: 0 2px 6px rgba(0,0,0,0.3);
-        }}
-        .block-container {{
-            padding-top: 80px; /* Push content below header */
-        }}
+        h1 {
+            color: #FF800E;  /* orange */
+        }
+        h2 {
+            color: #1E90FF;  /* blue */
+        }
         </style>
-        <div class="fixed-header">
-            {latest_game_date}
-        </div>
-    """, unsafe_allow_html=True)
+        """,
+        unsafe_allow_html=True
+    )
+
+    # Add latest game date in dataframe as a header.
+    st.header(f"Latest game date: {load_latest_game_date().strftime('%B %d, %Y')}")
 
     # Set title.
     st.markdown("<h1 style='text-align: center; color: #FF800E;'>⚽ European Competitions: Player overview ⚽</h1>",
