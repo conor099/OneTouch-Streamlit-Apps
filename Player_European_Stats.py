@@ -211,6 +211,7 @@ def create_streamlit_app():
             top: 0;
             left: 0;
             width: 100%;
+            background-color: #0E1117;  /* dark grey so it stands out in dark mode */
             color: #FF800E;
             padding: 1rem;
             text-align: center;
