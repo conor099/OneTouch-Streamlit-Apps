@@ -203,7 +203,7 @@ def create_streamlit_app():
     )
 
     # Add latest game date in dataframe as a header.
-    st.markdown(f"<h1 style='color: #FF800E;'>Latest game date: {load_latest_game_date().strftime('%B %d, %Y')}</h1>", unsafe_allow_html=True)
+    st.markdown(f"<h1 style='color: #FF800E; font-size:8px;'>Latest game date: {load_latest_game_date().strftime('%B %d, %Y')}</h1>", unsafe_allow_html=True)
     # st.header(f"Latest game date: {load_latest_game_date().strftime('%B %d, %Y')}")
 
     # Set title.
